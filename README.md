@@ -1,0 +1,2 @@
+# Stakes
+Social Betting platform
