@@ -14,15 +14,23 @@ import {
   ImagePickerIOS
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { MapView, Location, Permissions } from 'expo';
+import { MapView, Location, Permissions, Font } from 'expo';
 
 global.__DEV__ = false
 
 //Screens
 class LoginScreen extends React.Component {
   static navigationOptions = {
-    title: 'Login'
+      title: 'Login',
+      fontLoaded: false,
   };
+
+  async componentDidMount() {
+      await Font.loadAsync({
+          'sf-light': require('./SFLight.otf'),
+      });
+      this.setState({ fontLoaded: true });
+  }
 
   press() {
     this.props.navigation.navigate('LoginPage')
@@ -34,15 +42,19 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.textBig}>Login to BetOnIt!</Text>
-        <TouchableOpacity onPress={ () => {this.press()} } style={[styles.button, styles.buttonGreen]}>
-          <Text style={styles.buttonLabel}>Tap to Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>
-          <Text style={styles.buttonLabel}>Tap to Register</Text>
-        </TouchableOpacity>
-      </View>
+      <div>
+          { this.state.fontLoaded ? (
+              <View style={styles.container}>
+                <Text style={styles.textBig}>Login to Stakes!</Text>
+                <TouchableOpacity onPress={ () => {this.press()} } style={[styles.button, styles.buttonGreen]}>
+                  <Text style={styles.buttonLabel}>Tap to Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>
+                  <Text style={styles.buttonLabel}>Tap to Register</Text>
+                </TouchableOpacity>
+              </View>
+          ) : null }
+      </div>
     )
   }
 }
@@ -58,6 +70,7 @@ export default StackNavigator({
 //Styles
 const styles = StyleSheet.create({
   container: {
+    fontFamily: 'sf-light',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
