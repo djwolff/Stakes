@@ -59,11 +59,9 @@ userSchema.statics.findOrCreate = function(specification, extras, callback) {
 
 // Step 2: Create all of your models here, as properties.
 var User = mongoose.model('User', userSchema);
-var Contact = mongoose.model('Contact', contactSchema)
-var Message = mongoose.model('Message', messageSchema)
+var Bet = mongoose.model('Bet', betSchems)
 // Step 3: Export your models object
 module.exports = {
   User: User,
-  Contact: Contact,
-  Message: Message
+  Bet:Bet,
 };
