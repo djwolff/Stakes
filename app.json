@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "hohoho",
-    "description": "Like Yo but not",
-    "slug": "hohoho",
+    "name": "stakes",
+    "description": "When the stakes are high, the betting gets going.",
+    "slug": "stakes",
     "privacy": "public",
     "sdkVersion": "18.0.0",
     "version": "1.0.0",
