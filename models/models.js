@@ -8,38 +8,35 @@ mongoose.connect(connect);
 // Step 1: Write your schemas here!
 // Remember: schemas are like your blueprint, and models
 // are like your building!
+const mongoose = require('mongoose');
+
 var userSchema = mongoose.Schema({
-  username: String,
-  password: String,
-  phone: String,
-  facebookId: String,
-  pictureURL: String
+  facebookId: String
+  access_token: String,
+  refresh_token: String,
+  friends_list: Array,
+  bets: Array
 });
 
-var contactSchema = mongoose.Schema({
-  name: String,
-  phone: String,
-  owner: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  }
-})
+var betSchema = mongoose.Schema({
+  comments: Array,
+  bettor: String,
+  bettee: String,
+  votes: {
+    bettor: Array,
+    betee: Array
+  },
+  likes: Array
+});
 
-var messageSchema = mongoose.Schema({
-  created: Date,
-  content: String,
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  },
-  contact: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Contact'
-  },
-  channel: String,
-  status: String,
-  from: String
-})
+var User = mongoose.model('User', userSchema);
+var Doc = mongoose.model('Bets', betSchema);
+
+module.exports = {
+  User: User,
+  Doc: Doc
+};
+
 
 userSchema.statics.findOrCreate = function(specification, extras, callback) {
  User.findOne(specification, function(error, foundUsers) {
