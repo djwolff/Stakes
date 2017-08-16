@@ -71,17 +71,19 @@ class App extends React.Component {
     return (
       <View>
           <Drawer
-                type="static"
+                type="overlay"
                 content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
                 ref = {(ref) => this._drawer = ref}
                 tapToClose={true}
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
-                panCloseMask={0.2}
-                closedDrawerOffset={-3}
+                // panCloseMask={0.9}
+                // panOpenMask={0.9}
+                closedDrawerOffset={80}
                 styles={[styles.drawerStyles]}
                 tweenHandler={Drawer.tweenPresets.parallax}
             >
           <Text style={styles.text}>This is cool.</Text>
+
           <TouchableOpacity onPress={ () => {this.login()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to Login</Text>
           </TouchableOpacity>
@@ -129,15 +131,6 @@ const styles = StyleSheet.create({
       main: {
           paddingLeft: 3
       },
-      main: {
-          paddingLeft: 3
-      },
-      drawerOverlay: {
-          background: '#000000'
-      },
-      mainOverlay: {
-          background: '#000000'
-      }
   },
   container: {
     width: '100%',
