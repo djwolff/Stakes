@@ -3,8 +3,8 @@ import LoginScreen from './Login';
 import CreateBetScreen from './CreateBet';
 import PendingBetScreen from './PendingBet';
 import DrawerMenuScreen from './DrawerMenu';
+import Header from './Header';
 import Drawer from 'react-native-drawer';
-
 import {
   AsyncStorage,
   RefreshControl,
@@ -37,10 +37,9 @@ class App extends React.Component {
         this.openControlPanel = this.openControlPanel.bind(this);
     }
 
-  static navigationOptions = ({ navigation }) => ({
-      title: 'App',
-      headerRight: <Button title="Create" onPress={() => {navigation.state.params.handleCreateBet()}} />
-  });
+  static navigationOptions = {
+    header: null
+  };
 
   closeControlPanel = () => {
      this._drawer.close()
@@ -51,7 +50,8 @@ class App extends React.Component {
 
   componentDidMount() {
       this.props.navigation.setParams({
-          handleCreateBet: this.createBet.bind(this)
+          handleCreateBet: this.createBet.bind(this),
+          handleOpenControlPanel: this.openControlPanel.bind(this)
       }) // Used to handle the headerRight navigation.
   }
 
@@ -79,6 +79,7 @@ class App extends React.Component {
                 panCloseMask={1}
                 panOpenMask={1}
                 styles={{drawer: {
+                            paddingTop: 20,
                             shadowColor: '#000000',
                             shadowOpacity: 0.8,
                             shadowRadius: 3,
@@ -96,6 +97,7 @@ class App extends React.Component {
                     }
                 }}
             >
+          <Header />
           <Text style={styles.text}>This is cool.</Text>
           <TouchableOpacity onPress={ () => {this.login()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to Login</Text>
@@ -129,7 +131,8 @@ export default StackNavigator({
   DrawerMenu: {
     screen: DrawerMenuScreen,
   },
-}, {initialRouteName: 'App'});
+}, {initialRouteName: 'App'}
+);
 
 
 //Styles
