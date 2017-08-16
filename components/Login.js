@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from './Header';
+
 import {
   AsyncStorage,
   RefreshControl,
@@ -60,6 +62,7 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View>
+          <Header/>
           <View style={styles.container}>
             <Text style={styles.textBig}>Login to Stakes!</Text>
             <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>

@@ -41,8 +41,9 @@ export default Header;
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    height: 20,
-    width: 100,
+    height: 50,
+    width: 720,
+    alignSelf: 1,
     backgroundColor: 'skyblue'
   },
   text: {
