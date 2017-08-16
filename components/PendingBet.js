@@ -13,8 +13,11 @@ import {
   Image,
   ImagePickerIOS
 } from 'react-native';
+import DrawerMenuScreen from './DrawerMenu';
 import { StackNavigator } from 'react-navigation';
 import { MapView, Location, Permissions, Font } from 'expo';
+import Drawer from 'react-native-drawer';
+import Header from './Header';
 
 global.__DEV__ = false
 
@@ -78,11 +81,9 @@ class PendingBetScreen extends React.Component {
                   }
               }}
           >
-          <Header />
-          <Text styles={styles.text}>Pending Bet</Text>
-          <TouchableOpacity onPress={ () => {this.openControlPanel()} } style={[styles.button, styles.buttonGreen]}>
-            <Text style={styles.buttonLabel}>Open Control Panel</Text>
-          </TouchableOpacity>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={ () => {this.openControlPanel()} } style={styles.borderMenu}>Menu</TouchableOpacity>
+          </View>
         </Drawer>
       </View>
     )
@@ -97,9 +98,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  },
+  header: {
+    backgroundColor: '#000080',
+    flex: 0.3,
+    paddingTop: 10
   },
   text: {
     fontFamily: 'Avenir',
   },
+  containerFull: {
+    flex: 1,
+    padding: 3,
+    alignItems: 'stretch',
+    backgroundColor: '#F5FCFF',
+  },
+  button: {
+    alignSelf: 'stretch',
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 5,
+    marginRight: 5,
+    borderRadius: 5
+  },
+  buttonGreen: {
+    backgroundColor: '#2ECC40'
+  },
+  buttonLabel: {
+    fontFamily: 'Avenir',
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'white'
+  },
+  borderMenu: {
+    position: 'relative',
+    paddingLeft: 1.25,
+    content: "",
+    position: 'absolute',
+    top: 0.25,
+    left: 0,
+    width: 1,
+    height: 0.125,
+    borderTop:' 0.375 double #000',
+    borderBottom: '0.125 solid #000',
+  }
 });
