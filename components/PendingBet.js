@@ -20,10 +20,14 @@ global.__DEV__ = false
 
 //Screens
 class PendingBetScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    state = {
+      state: 'sent',
+    };
+  }
   static navigationOptions = {
-      header: null,
-  };
-  state = {
+      header: 'Bets Pending',
   };
 
   render() {
