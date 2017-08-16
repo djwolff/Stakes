@@ -23,8 +23,9 @@ global.__DEV__ = false
 
 async function logIn() {
   const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
-      permissions: [ 'public_profile', 'user_birthday', 'user_friends' ], behavior: 'system'
+      permissions: [ 'public_profile', 'user_birthday', 'user_friends' ], behavior: 'native'
     });
+  console.log('in between stuff')
   if (type === 'success') {
     console.log('successful facebook login')
     console.log(type, token)
