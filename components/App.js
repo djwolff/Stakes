@@ -69,21 +69,34 @@ class App extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
           <Drawer
                 type="overlay"
                 content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
                 ref = {(ref) => this._drawer = ref}
                 tapToClose={true}
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
-                // panCloseMask={0.9}
-                // panOpenMask={0.9}
-                closedDrawerOffset={80}
-                styles={[styles.drawerStyles]}
-                tweenHandler={Drawer.tweenPresets.parallax}
+                panCloseMask={1}
+                panOpenMask={1}
+                styles={{drawer: {
+                            shadowColor: '#000000',
+                            shadowOpacity: 0.8,
+                            shadowRadius: 3,
+                            backgroundColor: 'red',
+                            height: '100%',
+                            color: '#FFFFFF'
+                        },
+                        main: {
+                            padding: 3
+                        }}}
+                tweenHandler={(ratio) => {
+                    return {
+                      drawer: { shadowRadius: Math.min(ratio*5*5, 5) },
+                      main: { opacity:(2-ratio)/2 },
+                    }
+                }}
             >
           <Text style={styles.text}>This is cool.</Text>
-
           <TouchableOpacity onPress={ () => {this.login()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to Login</Text>
           </TouchableOpacity>
@@ -121,21 +134,10 @@ export default StackNavigator({
 
 //Styles
 const styles = StyleSheet.create({
-  drawerStyles: {
-      drawer: {
-          shadowColor: '#000000',
-          shadowOpacity: 0.8,
-          shadowRadius: 3,
-          backgroundColor: '#000000'
-      },
-      main: {
-          paddingLeft: 3
-      },
-  },
   container: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: '1',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   text: {
     fontFamily: 'Avenir',
