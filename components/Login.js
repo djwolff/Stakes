@@ -19,7 +19,7 @@ import axios from 'axios'
 
 global.__DEV__ = false
 
-async function logIn() {     
+async function logIn() {
   const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
       permissions: ['public_profile', 'user_birthday'], behavior: 'browser'
     });
@@ -41,7 +41,7 @@ async function logIn() {
 //Screens
 class LoginScreen extends React.Component {
   static navigationOptions = {
-      title: 'Login',
+     header: null
   };
   state = {
     fontLoaded: false,
@@ -50,7 +50,7 @@ class LoginScreen extends React.Component {
   press() {
     this.props.navigation.navigate('LoginPage')
   }
- 
+
   register() {
     logIn()
     console.log('im outisde of login')

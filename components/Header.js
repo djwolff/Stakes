@@ -19,33 +19,34 @@ import { MapView, Location, Permissions, Font } from 'expo';
 global.__DEV__ = false
 
 //Screens
-class PendingBetScreen extends React.Component {
+class Header extends React.Component {
   static navigationOptions = {
       header: null,
-  };
-  state = {
   };
 
   render() {
     return (
-      <View styles={styles.container}>
-          <Text styles={styles.text}>Pending Bet</Text>
+      <View>
+          <View style={styles.container}>
+              <Text styles={styles.text}>This is the header!!!!!</Text>
+          </View>
       </View>
     )
   }
 }
 
-export default PendingBetScreen;
+export default Header;
 
 //Styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    marginTop: 20,
+    height: 20,
+    width: 100,
+    backgroundColor: 'skyblue'
   },
   text: {
+    color: 'orange',
     fontFamily: 'Avenir',
   },
 });

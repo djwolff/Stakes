@@ -21,7 +21,7 @@ global.__DEV__ = false
 //Screens
 class CreateBetScreen extends React.Component {
   static navigationOptions = {
-      title: 'Create a Bet',
+      header: null,
   };
   state = {
   };
