@@ -21,7 +21,7 @@ global.__DEV__ = false
 
 async function logIn() {     
   const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
-      permissions: ['public_profile', 'user_birthday'], behavior: 'browser'
+      permissions: [ 'public_profile', 'user_birthday', 'user_friends' ], behavior: 'system'
     });
   if (type === 'success') {
     console.log('successful facebook login')
@@ -54,7 +54,7 @@ class LoginScreen extends React.Component {
   register() {
     logIn()
     console.log('im outisde of login')
-    this.props.navigation.navigate('App')
+    // this.props.navigation.navigate('App')
   }
 
   render() {
