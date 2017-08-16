@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 50,
     width: 720,
-    alignSelf: 1,
+    // alignSelf: 1,
     backgroundColor: 'skyblue'
   },
   text: {
