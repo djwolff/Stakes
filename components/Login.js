@@ -14,9 +14,29 @@ import {
   ImagePickerIOS
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { MapView, Location, Permissions, Font } from 'expo';
+import { MapView, Location, Permissions, Font, Facebook } from 'expo';
+import axios from 'axios'
 
 global.__DEV__ = false
+
+async function logIn() {     
+  const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
+      permissions: ['public_profile', 'user_birthday'], behavior: 'system'
+    });
+  if (type === 'success') {
+    console.log('successful facebook login')
+    console.log(type, token)
+    // Get the user's name using Facebook's Graph API
+    const response = await fetch(
+      `https://graph.facebook.com/me?access_token=${token}`);
+    // console.log('made it past the post', await response.json())
+    Alert.alert(
+      'Logged in!',
+      `Hi ${(await response.json()).name}!`,
+    );
+  }
+}
+
 
 //Screens
 class LoginScreen extends React.Component {
@@ -30,9 +50,10 @@ class LoginScreen extends React.Component {
   press() {
     this.props.navigation.navigate('LoginPage')
   }
-
+ 
   register() {
-    this.props.navigation.navigate('Register');
+    logIn()
+    console.log('im outisde of login')
   }
 
   render() {
@@ -40,11 +61,8 @@ class LoginScreen extends React.Component {
       <View>
           <View style={styles.container}>
             <Text style={styles.textBig}>Login to Stakes!</Text>
-            <TouchableOpacity onPress={ () => {this.press()} } style={[styles.button, styles.buttonGreen]}>
-              <Text style={styles.buttonLabel}>Tap to Login</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>
-              <Text style={styles.buttonLabel}>Tap to Register</Text>
+              <Text style={styles.buttonLabel}>Tap to Register with Facebook</Text>
             </TouchableOpacity>
           </View>
       </View>
