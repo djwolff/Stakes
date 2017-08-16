@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from './Header';
+
 import {
   AsyncStorage,
   RefreshControl,
@@ -28,9 +30,13 @@ class PendingBetScreen extends React.Component {
 
   render() {
     return (
-      <View styles={styles.container}>
-          <Text styles={styles.text}>Pending Bet</Text>
-      </View>
+        <View>
+            <Header />
+            <View styles={styles.container}>
+                <Text styles={styles.text}>Pending Bet</Text>
+            </View>
+        </View>
+
     )
   }
 }

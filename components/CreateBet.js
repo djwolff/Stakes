@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from './Header';
+
 import {
   AsyncStorage,
   RefreshControl,
@@ -28,9 +30,12 @@ class CreateBetScreen extends React.Component {
 
   render() {
     return (
-      <View styles={styles.container}>
-          <Text styles={styles.text}>Create a Bet</Text>
-      </View>
+        <View>
+            <Header />
+            <View styles={styles.container}>
+                <Text styles={styles.text}>Create a Bet</Text>
+            </View>
+        </View>
     )
   }
 }
