@@ -36,7 +36,7 @@ class App extends React.Component {
         this.closeControlPanel = this.closeControlPanel.bind(this);
         this.openControlPanel = this.openControlPanel.bind(this);
         state = ({
-          betArray = []
+          betArray: []
         })
     }
 

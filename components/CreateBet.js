@@ -34,13 +34,19 @@ class CreateBetScreen extends React.Component {
   submit() {
 
   }
-  
+
   render() {
     return (
         <View>
             <Header />
             <View styles={styles.container}>
                 <Text> {this.state.username} bets {this.state.betee} {this.state.bet} for {this.state.wager}</Text>
+                <Picker
+                  selectedValue={this.state.betee}
+                  onValueChange={(itemValue, itemIndex) => this.setState({betee: itemValue})}>
+                  <Picker.Item label="Java" value="java" />
+                  <Picker.Item label="JavaScript" value="js" />
+                </Picker>
                 <TouchableOpacity onPress={ () => {this.submit()} } style={[styles.button, styles.buttonGreen]}>
                   <Text style={styles.buttonLabel}>Submit</Text>
                 </TouchableOpacity>
