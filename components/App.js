@@ -35,6 +35,9 @@ class App extends React.Component {
         super();
         this.closeControlPanel = this.closeControlPanel.bind(this);
         this.openControlPanel = this.openControlPanel.bind(this);
+        state = ({
+          betArray = []
+        })
     }
 
   static navigationOptions = {
@@ -53,8 +56,22 @@ class App extends React.Component {
           handleCreateBet: this.createBet.bind(this),
           handleOpenControlPanel: this.openControlPanel.bind(this)
       }) // Used to handle the headerRight navigation.
+      fetch('stakes.heroku.com/feed', {
+        method: 'get'
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        var betArr = []
+        responseJson.bets.forEach((bets) => {
+          betArr.push(bets)
+        })
+        this.setState({
+          betArray: betArr
+        })
+      })
+      .catch((err) => console.log('error: ' + err))
   }
-
+  
   createBet() {
     this.props.navigation.navigate('CreateBet')
   }

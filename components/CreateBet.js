@@ -26,14 +26,24 @@ class CreateBetScreen extends React.Component {
       header: null,
   };
   state = {
+    username: 'Mika',
+    betee: 'Johnathan', 
+    bet: "can't run around naked in front of Horizons",
+    wager: "3 bottles of soylent"
   };
+  submit() {
 
+  }
+  
   render() {
     return (
         <View>
             <Header />
             <View styles={styles.container}>
-                <Text styles={styles.text}>Create a Bet</Text>
+                <Text> {this.state.username} bets {this.state.betee} {this.state.bet} for {this.state.wager}</Text>
+                <TouchableOpacity onPress={ () => {this.submit()} } style={[styles.button, styles.buttonGreen]}>
+                  <Text style={styles.buttonLabel}>Submit</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
