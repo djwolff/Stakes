@@ -5,6 +5,7 @@ import PendingBetScreen from './PendingBet';
 import DrawerMenuScreen from './DrawerMenu';
 import Header from './Header';
 import Drawer from 'react-native-drawer';
+import Hamburger from 'react-native-hamburger';
 import {
   AsyncStorage,
   RefreshControl,
@@ -97,8 +98,7 @@ class App extends React.Component {
                     }
                 }}
             >
-          <Header />
-          <Text style={styles.text}>This is cool.</Text>
+          <Header name="Login" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)}/>
           <TouchableOpacity onPress={ () => {this.login()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to Login</Text>
           </TouchableOpacity>
@@ -139,6 +139,8 @@ export default StackNavigator({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 0,
+    backgroundColor: '#f1f1f1'
     // justifyContent: 'center',
     // alignItems: 'center',
   },
