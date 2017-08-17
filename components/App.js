@@ -89,7 +89,7 @@ class App extends React.Component {
           console.log('user not logged in')
           this.props.navigation.navigate('Login')
         }
-      }) 
+      })
       // const ds = new ListView.DataSource({
       //     rowHasChanged: (r1, r2) => r1 !== r2
       // });
@@ -138,7 +138,7 @@ class App extends React.Component {
                             shadowColor: '#000000',
                             shadowOpacity: 0.8,
                             shadowRadius: 3,
-                            backgroundColor: '#365899',
+                            backgroundColor: '#3D516B',
                             height: '100%',
                             color: '#FFFFFF'
                         }}}

@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     height: 50,
     width: 720,
     // alignSelf: 1,
-    backgroundColor: 'skyblue'
+    backgroundColor: '#3D516B'
   },
   text: {
     color: 'orange',
     fontFamily: 'Avenir',
   },
   header: {
-    backgroundColor: 'steelblue',
+    backgroundColor: '#3D516B',
     height: 75,
     width: '100%',
     paddingTop: 10,

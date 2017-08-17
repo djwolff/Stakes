@@ -91,7 +91,7 @@ class CreateBetScreen extends React.Component {
               shadowColor: '#000000',
               shadowOpacity: 0.8,
               shadowRadius: 3,
-              backgroundColor: '#365899',
+              backgroundColor: '#3D516B',
               height: '100%',
               color: '#FFFFFF'
             }}}

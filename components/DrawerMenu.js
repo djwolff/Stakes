@@ -20,7 +20,8 @@ global.__DEV__ = false
 //Screens
 class DrawerMenuScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    header: null,
+    title: 'Menu',
   };
 
   render() {
@@ -50,6 +51,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
   },
   container: {
-    backgroundColor: '#365899'
+    backgroundColor: '#3D516B'
   }
 });

@@ -129,7 +129,7 @@ class PendingBetScreen extends React.Component {
             shadowRadius: 3,
             height: '100%',
             color: '#FFFFFF',
-            backgroundColor: '#365899',
+            backgroundColor: '#3D516B',
           }}}
           tweenHandler={(ratio) => {
             return {
