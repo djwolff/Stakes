@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   AsyncStorage,
   RefreshControl,
@@ -70,14 +70,13 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <View>
-      <Header/>
       <View style={styles.container}>
-      <Text style={styles.textBig}>Login to Stakes!</Text>
-      <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>
-      <Text style={styles.buttonLabel}>Tap to Register with Facebook</Text>
-      </TouchableOpacity>
-      </View>
+        <Header name="Login to Stakes!"/>
+        <View style={styles.rest}>
+          <Icon.Button style={[styles.button]} name="facebook" backgroundColor="#3b5998" onPress={ () => {this.register()} }>
+            <Text style={{fontFamily: 'Arial', fontSize: 20, color: 'white', padding: 5}}>Log in with Facebook</Text>
+          </Icon.Button>
+        </View>
       </View>
     )
   }
@@ -90,18 +89,18 @@ const styles = StyleSheet.create({
   container: {
     fontFamily: 'Avenir',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   button: {
+    alignItems: 'center',
     alignSelf: 'stretch',
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 10,
-    marginLeft: 5,
-    marginRight: 5,
     borderRadius: 5
+  },
+  rest: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   buttonRed: {
     backgroundColor: '#FF585B',
