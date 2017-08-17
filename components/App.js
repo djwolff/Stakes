@@ -31,6 +31,9 @@ function handleCreateBet() {
     this.props.navigation.navigate('Create')
 }
 
+let allFeedArray = [];
+let myFeedArray = [];
+
 //Screens
 class App extends React.Component {
   constructor(props){
@@ -78,11 +81,22 @@ class App extends React.Component {
               },
           })
           .then((resp) => resp.json())
-          .then((respJson) => {
-              console.log(respJson);
-              this.setState({
-                  dataSource: ds.cloneWithRows(respJson)
+          .then((allFeed) => {
+              fetch('https://stakes.herokuapp.com/myBets', {
+                  method: 'POST',
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
               })
+              .then((resp) => resp.json())
+              .then((myFeed) => {
+                  myFeedArray = myFeed;
+                  allFeedArray = allFeed;
+                  this.setState({
+                      dataSource: ds.cloneWithRows(allFeedArray)
+                  })
+              })
+              .catch(console.log)
           })
           .catch(console.log)
         }
@@ -124,6 +138,25 @@ class App extends React.Component {
   singleBet(id) {
     this.props.navigation.navigate('SingleBet', {id: id});
   }
+
+  myFeedClick = () => {
+    const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.setState({
+        dataSource: ds.cloneWithRows(myFeedArray)
+    })
+  }
+
+  allFeedClick = () => {
+      const ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
+      });
+      this.setState({
+          dataSource: ds.cloneWithRows(allFeedArray)
+      })
+  }
+
   render() {
       console.log('DATA SOURCE', this.state.dataSource);
     return (
@@ -158,6 +191,16 @@ class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => {this.pendingBet()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to see Pending Bets</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.myFeedClick()}>
+            <Text>
+              MY FEED
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.allFeedClick()}>
+            <Text>
+              GLOBAL FEED
+            </Text>
           </TouchableOpacity>
           <ListView
             dataSource={this.state.dataSource}
