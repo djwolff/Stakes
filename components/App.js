@@ -109,9 +109,6 @@ class App extends React.Component {
                             backgroundColor: 'red',
                             height: '100%',
                             color: '#FFFFFF'
-                        },
-                        main: {
-                            padding: 3
                         }}}
                 tweenHandler={(ratio) => {
                     return {
@@ -126,9 +123,6 @@ class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => {this.pendingBet()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to see Pending Bets</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ () => {this.openControlPanel()} } style={[styles.button, styles.buttonGreen]}>
-            <Text style={styles.buttonLabel}>Open Control Panel</Text>
           </TouchableOpacity>
           <ListView
             dataSource={this.state.dataSource}
@@ -190,7 +184,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   buttonGreen: {
-    backgroundColor: '#2ECC40'
+    backgroundColor: '#4ED2B6'
   },
   buttonLabel: {
     fontFamily: 'Avenir',

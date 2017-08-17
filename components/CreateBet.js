@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Picker,
   TouchableOpacity,
   TextInput,
   ListView,
@@ -27,7 +28,7 @@ class CreateBetScreen extends React.Component {
   };
   state = {
     username: 'Mika',
-    betee: 'Johnathan', 
+    betee: 'Johnathan',
     bet: "can't run around naked in front of Horizons",
     wager: "3 bottles of soylent"
   };
@@ -47,6 +48,18 @@ class CreateBetScreen extends React.Component {
                   <Picker.Item label="Java" value="java" />
                   <Picker.Item label="JavaScript" value="js" />
                 </Picker>
+                <TextInput>
+                  multiline = {true}
+                  numberOfLines = {6}
+                  onChangeText={(text) => this.setState({bet: text})}
+                  value={this.state.bet}
+                </TextInput>
+                <TextInput>
+                  multiline = {true}
+                  numberOfLines = {3}
+                  onChangeText={(text) => this.setState({wager: text})}
+                  value={this.state.wager}
+                </TextInput>
                 <TouchableOpacity onPress={ () => {this.submit()} } style={[styles.button, styles.buttonGreen]}>
                   <Text style={styles.buttonLabel}>Submit</Text>
                 </TouchableOpacity>

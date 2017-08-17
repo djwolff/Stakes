@@ -108,9 +108,6 @@ class PendingBetScreen extends React.Component {
             backgroundColor: 'red',
             height: '100%',
             color: '#FFFFFF'
-          },
-          main: {
-            padding: 3
           }}}
           tweenHandler={(ratio) => {
             return {
@@ -119,7 +116,8 @@ class PendingBetScreen extends React.Component {
             }
           }}
           >
-            <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)}/>
+            <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
+
             <View style={styles.control}>
               <View style={styles.picker}>
                 <TouchableOpacity style={this.state.state === 'sent' ? styles.selectedDiv : styles.unusedDiv} onPress={() => this.sentClick()}>
