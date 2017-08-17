@@ -5,11 +5,8 @@ import PendingBetScreen from './PendingBet';
 import DrawerMenuScreen from './DrawerMenu';
 import Header from './Header';
 import Drawer from 'react-native-drawer';
-<<<<<<< HEAD
 import axios from 'axios';
-=======
 import Hamburger from 'react-native-hamburger';
->>>>>>> c9ac1a463d9c2f27c41ca8411c0cecf39ea5d2e8
 import {
   AsyncStorage,
   RefreshControl,
@@ -47,19 +44,19 @@ class App extends React.Component {
     }
 
     fetch('https://stakes.herokuapp.com/feed', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-      })
-      .then((resp) => resp.json())
-      .then((respJson) => {
-          console.log(respJson);
-          this.setState({
-              dataSource: ds.cloneWithRows(respJson)
-          })
-      })
-      .catch(console.log)
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+    })
+    .then((resp) => resp.json())
+    .then((respJson) => {
+        console.log(respJson);
+        this.setState({
+            dataSource: ds.cloneWithRows(respJson)
+        })
+    })
+    .catch(console.log)
   }
 
   static navigationOptions = {
