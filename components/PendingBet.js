@@ -114,7 +114,6 @@ class PendingBetScreen extends React.Component {
   render() {
       console.log('DATA SOURCE', this.state.dataSource);
     return (
-      <View styles={styles.container}>
         <Drawer
           type="overlay"
           content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
@@ -128,9 +127,9 @@ class PendingBetScreen extends React.Component {
             shadowColor: '#000000',
             shadowOpacity: 0.8,
             shadowRadius: 3,
-            backgroundColor: '#365899',
             height: '100%',
-            color: '#FFFFFF'
+            color: '#FFFFFF',
+            backgroundColor: '#365899',
           }}}
           tweenHandler={(ratio) => {
             return {
@@ -139,6 +138,8 @@ class PendingBetScreen extends React.Component {
             }
           }}
           >
+            <View styles={styles.container}>
+
             <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
 
             <View style={styles.control}>
@@ -167,8 +168,9 @@ class PendingBetScreen extends React.Component {
                     </TouchableOpacity>}
                 style={styles.list}
                 />
+              </View>
+
           </Drawer>
-        </View>
       )
     }
   }

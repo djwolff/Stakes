@@ -25,8 +25,8 @@ class DrawerMenuScreen extends React.Component {
 
   render() {
     return (
-        <View>
-            <View styles={{backgroundColor: '#365899'}}>
+        <View style={styles.container}>
+            <View>
                 <Text styles={styles.text}>Drawer Menu</Text>
                 <TouchableOpacity onPress={ () => {this.props.handleClose()} } style={[styles.button, styles.buttonGreen]}>
                   <Text style={styles.buttonLabel}>Close</Text>
@@ -41,6 +41,11 @@ export default DrawerMenuScreen;
 
 //Styles
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+  },
   text: {
     fontFamily: 'Avenir',
   },
