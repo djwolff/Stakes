@@ -34,13 +34,14 @@ function logIn() {
     else{
       newUser()
       .then(function(user){
-        AsyncStorage.setItem('user',{
-          name: user.name,
-          id: user.id
-        })
+        console.log('THIS IS THE USER HERE**************',user.data);
+        AsyncStorage.setItem('user',JSON.stringify({
+          name: user.data.name,
+          id: user.data._id
+        }))
         Alert.alert(
           'Logged in!',
-          `Hi ${user.name}!`,
+          `Hi ${user.data.name}!`,
         );
       })
       //     const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
@@ -164,20 +165,36 @@ function newUser(){
           return resp.json();
         })
         .then(function(data) {
-          console.log(data)
           axios({
-            method: 'post',
             url: 'https://stakes.herokuapp.com/register',
+            method: 'post',
             data:{
               facebookId: data.id,
-              access_token: token,
+              access_token: response.token,
               friends_list: [],
               name: data.name
             }
           })
+          // fetch('https://stakes.herokuapp.com/register', {
+          //   method: 'POST',
+          //   headers: {
+          //     "Content-Type": "application/json"
+          //   },
+          //   body:JSON.stringify({
+          //     facebookId: data.id,
+          //     access_token: token,
+          //     friends_list: [],
+          //     name: data.name
+          //   })
+          // })
+          // .then((resp) => resp.json())
           .then(function(user){
+            console.log('*********I AM HERE NOW*********')
             console.log(user)
             resolve(user);
+          })
+          .catch((err)=>{
+            console.log(err)
           })
         })
       }else{
