@@ -7,6 +7,7 @@ import Header from './Header';
 import Drawer from 'react-native-drawer';
 import axios from 'axios';
 import Hamburger from 'react-native-hamburger';
+import SingleBetScreen from './SingleBet';
 import {
   AsyncStorage,
   RefreshControl,
@@ -110,17 +111,19 @@ class App extends React.Component {
   }
 
   createBet() {
-    this.props.navigation.navigate('CreateBet')
+    this.props.navigation.navigate('CreateBet');
   }
 
   login() {
-    this.props.navigation.navigate('Login')
+    this.props.navigation.navigate('Login');
   }
 
   pendingBet() {
-    this.props.navigation.navigate('PendingBet')
+    this.props.navigation.navigate('PendingBet');
   }
-
+  singleBet(id) {
+    this.props.navigation.navigate('SingleBet', {id: id});
+  }
   render() {
       console.log('DATA SOURCE', this.state.dataSource);
     return (
@@ -159,7 +162,7 @@ class App extends React.Component {
           <ListView
             dataSource={this.state.dataSource}
             renderRow={(rowData) =>
-                <TouchableOpacity style={styles.eachBet}>
+                <TouchableOpacity style={styles.eachBet} onPress={ () =>{this.singleBet(rowData._id)}}>
                     <Text style={styles.allText}>Bettor: {rowData.bettor}</Text>
                     <Text style={styles.allText}>Bettee: {rowData.bettee}</Text>
                     <Text style={styles.allText}>Content: {rowData.content}</Text>
@@ -189,6 +192,12 @@ export default StackNavigator({
   DrawerMenu: {
     screen: DrawerMenuScreen,
   },
+  SingleBet: {
+    navigationOptions:{
+      header: null
+    }
+    screen: SingleBetScreen,
+  }
 }, {initialRouteName: 'App'}
 );
 
