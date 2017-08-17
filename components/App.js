@@ -6,9 +6,7 @@ import DrawerMenuScreen from './DrawerMenu';
 import Header from './Header';
 import Drawer from 'react-native-drawer';
 import axios from 'axios';
-
 import Hamburger from 'react-native-hamburger';
-
 import {
   AsyncStorage,
   RefreshControl,
@@ -57,28 +55,58 @@ class App extends React.Component {
      this._drawer.open()
   };
 
-  componentDidMount() {
-      this.props.navigation.setParams({
-          handleCreateBet: this.createBet.bind(this),
-          handleOpenControlPanel: this.openControlPanel.bind(this)
-      })
-      const ds = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2
-      });
-      fetch('https://stakes.herokuapp.com/feed', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-      })
-      .then((resp) => resp.json())
-      .then((respJson) => {
-          console.log(respJson);
-          this.setState({
-              dataSource: ds.cloneWithRows(respJson)
+  componentWillMount() {
+      console.log('inside componentdidmount!')
+      AsyncStorage.getItem('user')
+      .then(result => {
+        var parsedResult = JSON.parse(result);
+        // var name = parsedResult.name;
+        // var id = parsedResult.id;
+        if (parsedResult) {
+          this.props.navigation.setParams({
+              handleCreateBet: this.createBet.bind(this),
+              handleOpenControlPanel: this.openControlPanel.bind(this)
           })
-      })
-      .catch(console.log)
+          const ds = new ListView.DataSource({
+              rowHasChanged: (r1, r2) => r1 !== r2
+          });
+          fetch('https://stakes.herokuapp.com/feed', {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json"
+              },
+          })
+          .then((resp) => resp.json())
+          .then((respJson) => {
+              console.log(respJson);
+              this.setState({
+                  dataSource: ds.cloneWithRows(respJson)
+              })
+          })
+          .catch(console.log)
+        }
+        else {
+          console.log('user not logged in')
+          this.props.navigation.navigate('Login')
+        }
+      }) 
+      // const ds = new ListView.DataSource({
+      //     rowHasChanged: (r1, r2) => r1 !== r2
+      // });
+      // fetch('https://stakes.herokuapp.com/feed', {
+      //     method: 'POST',
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     },
+      // })
+      // .then((resp) => resp.json())
+      // .then((respJson) => {
+      //     console.log(respJson);
+      //     this.setState({
+      //         dataSource: ds.cloneWithRows(respJson)
+      //     })
+      // })
+      // .catch(console.log)
   }
 
   createBet() {
