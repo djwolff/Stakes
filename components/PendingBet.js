@@ -144,31 +144,32 @@ class PendingBetScreen extends React.Component {
 
   render() {
     return (
+      <Drawer
+            type="overlay"
+            content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
+            ref = {(ref) => this._drawer = ref}
+            side="left"
+            tapToClose={true}
+            openDrawerOffset={0.2} // 20% gap on the right side of drawer
+            panCloseMask={0.2}
+            panOpenMask={0.2}
+            styles={{drawer: {
+                        paddingTop: 20,
+                        shadowColor: '#000000',
+                        shadowOpacity: 0.8,
+                        shadowRadius: 3,
+                        backgroundColor: '#3D516B',
+                        height: '100%',
+                        color: '#FFFFFF'
+                    }}}
+            tweenHandler={(ratio) => {
+                return {
+                  drawer: { shadowRadius: Math.min(ratio*5*5, 5) },
+                  main: { opacity:(2-ratio)/2 },
+                }
+            }}
+        >
       <View styles={styles.container}>
-        {/* <Drawer
-          type="overlay"
-          content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
-          ref = {(ref) => this._drawer = ref}
-          tapToClose={true}
-          openDrawerOffset={0.2} // 20% gap on the right side of drawer
-          panCloseMask={1}
-          panOpenMask={1}
-          styles={{drawer: {
-            paddingTop: 20,
-            shadowColor: '#000000',
-            shadowOpacity: 0.8,
-            shadowRadius: 3,
-            height: '100%',
-            color: '#FFFFFF',
-            backgroundColor: '#3D516B',
-          }}}
-          tweenHandler={(ratio) => {
-            return {
-              drawer: { shadowRadius: Math.min(ratio*5*5, 5) },
-              main: { opacity:(2-ratio)/2 },
-            }
-          }}
-          > */}
             <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
 
             <View style={styles.control}>
@@ -208,7 +209,7 @@ class PendingBetScreen extends React.Component {
                 }
               />
         </View>
-        //   {/* </Drawer> */}
+        </Drawer>
       )
     }
   }
