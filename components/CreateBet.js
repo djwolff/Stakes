@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-
+import axios from 'axios'
 import {
   AsyncStorage,
   RefreshControl,
@@ -21,11 +21,10 @@ import { MapView, Location, Permissions, Font } from 'expo';
 
 global.__DEV__ = false
 
+var names = ['Johnathan', 'Steven', 'Mika', 'David']
+
 //Screens
 class CreateBetScreen extends React.Component {
-  static navigationOptions = {
-      header: null,
-  };
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +35,11 @@ class CreateBetScreen extends React.Component {
     };
     this.closeControlPanel = this.closeControlPanel.bind(this);
     this.openControlPanel = this.openControlPanel.bind(this);
-  }
+  };
+
+  static navigationOptions = {
+      header: null,
+  };
 
   componentDidMount() {
     this.props.navigation.setParams({
@@ -55,7 +58,19 @@ class CreateBetScreen extends React.Component {
   };
 
   submit() {
-
+    axios.post('https://stakes.herokuapp.com/createBet', {
+      wager: this.state.wager,
+      content: this.state.content,
+      bettor: this.state.user,
+      betee: this.state.betee
+    })
+    .then(function(response) {
+      console.log('this is response:', response)
+      this.props.navigation.navigate('App')
+    })
+    .catch(function(err) {
+      console.log('error is', err)
+    })
   }
 
   render() {
@@ -87,24 +102,27 @@ class CreateBetScreen extends React.Component {
             >
             <Header name="What's at stake?" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
             <View styles={styles.container}>
-                <Text> {this.state.username} bets {this.state.betee} {this.state.bet} for {this.state.wager}</Text>
+                <Text> {this.state.user} bets {this.state.betee} {this.state.bet} for {this.state.wager}</Text>
                 <Picker
                   selectedValue={this.state.betee}
                   onValueChange={(itemValue, itemIndex) => this.setState({betee: itemValue})}>
-                  <Picker.Item label="Java" value="java" />
-                  <Picker.Item label="JavaScript" value="js" />
+                  {names.map((name) => {
+                    return <Picker.Item label={name} value={name} />
+                  })}
                 </Picker>
-                <TextInput>
+                <TextInput
+                  style={{borderWidth: 0.5}}
                   multiline = {true}
                   numberOfLines = {6}
-                  onChangeText={(text) => this.setState({bet: text})}
-                  value={this.state.bet}
+                  onChangeText={(text) => this.setState({content: text})}
+                  value={this.state.content}>
                 </TextInput>
-                <TextInput>
+                <TextInput
+                  style={{borderWidth: 0.5}}
                   multiline = {true}
                   numberOfLines = {3}
                   onChangeText={(text) => this.setState({wager: text})}
-                  value={this.state.wager}
+                  value={this.state.wager}>
                 </TextInput>
                 <TouchableOpacity onPress={ () => {this.submit()} } style={[styles.button, styles.buttonGreen]}>
                   <Text style={styles.buttonLabel}>Submit</Text>

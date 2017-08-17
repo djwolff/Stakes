@@ -44,19 +44,19 @@ class App extends React.Component {
     }
 
     fetch('https://stakes.herokuapp.com/feed', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-      })
-      .then((resp) => resp.json())
-      .then((respJson) => {
-          console.log(respJson);
-          this.setState({
-              dataSource: ds.cloneWithRows(respJson)
-          })
-      })
-      .catch(console.log)
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+    })
+    .then((resp) => resp.json())
+    .then((respJson) => {
+        console.log(respJson);
+        this.setState({
+            dataSource: ds.cloneWithRows(respJson)
+        })
+    })
+    .catch(console.log)
   }
 
   static navigationOptions = {
@@ -106,7 +106,7 @@ class App extends React.Component {
                             shadowColor: '#000000',
                             shadowOpacity: 0.8,
                             shadowRadius: 3,
-                            backgroundColor: 'red',
+                            backgroundColor: '#365899',
                             height: '100%',
                             color: '#FFFFFF'
                         }}}

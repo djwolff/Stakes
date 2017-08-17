@@ -25,11 +25,31 @@ global.__DEV__ = false
 class PendingBetScreen extends React.Component {
   constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+    });
     this.state = {
       state: 'sent',
       bets: [],
       menu: false,
+      dataSource: ds.cloneWithRows([])
     };
+
+    fetch('https://stakes.herokuapp.com/myPendingBets', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+    })
+    .then((resp) => resp.json())
+    .then((respJson) => {
+        console.log(respJson);
+        this.setState({
+            dataSource: ds.cloneWithRows(respJson)
+        })
+    })
+    .catch(console.log)
+
     this.closeControlPanel = this.closeControlPanel.bind(this);
     this.openControlPanel = this.openControlPanel.bind(this);
     this.sentClick = this.sentClick.bind(this);
@@ -69,6 +89,7 @@ class PendingBetScreen extends React.Component {
   }
 
   render() {
+      console.log('DATA SOURCE', this.state.dataSource);
     return (
       <View styles={styles.container}>
         <Drawer
@@ -84,7 +105,7 @@ class PendingBetScreen extends React.Component {
             shadowColor: '#000000',
             shadowOpacity: 0.8,
             shadowRadius: 3,
-            backgroundColor: 'red',
+            backgroundColor: '#365899',
             height: '100%',
             color: '#FFFFFF'
           }}}
@@ -110,8 +131,17 @@ class PendingBetScreen extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
+              <ListView
+                dataSource={this.state.dataSource}
+                renderRow={(rowData) =>
+                    <TouchableOpacity style={styles.eachBet}>
+                        <Text style={styles.allText}>Bettor: {rowData.bettor}</Text>
+                        <Text style={styles.allText}>Bettee: {rowData.bettee}</Text>
+                        <Text style={styles.allText}>Content: {rowData.content}</Text>
+                        <Text style={styles.allText}>Wager: {rowData.wager}</Text>
+                    </TouchableOpacity>}
+                />
             </View>
-
           </Drawer>
         </View>
       )
@@ -177,4 +207,15 @@ class PendingBetScreen extends React.Component {
     unusedText: {
       color: '#4ED2B6',
     },
+    eachBet: {
+        alignSelf: 'stretch',
+        padding: 10,
+        margin: 5,
+        borderRadius: 5,
+        backgroundColor: 'white',
+        border: '0.5px solid'
+    },
+    allText: {
+        fontFamily: 'Avenir'
+    }
   });
