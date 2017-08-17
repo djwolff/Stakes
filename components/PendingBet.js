@@ -21,13 +21,21 @@ import Header from './Header';
 
 global.__DEV__ = false
 
+let filteredSent = [];
+let filteredReceived = [];
+
+dsCreation = () => {
+    const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    return ds
+}
+
 //Screens
 class PendingBetScreen extends React.Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2
-    });
+    const ds = dsCreation();
     this.state = {
       state: 'sent',
       bets: [],
@@ -44,8 +52,14 @@ class PendingBetScreen extends React.Component {
     .then((resp) => resp.json())
     .then((respJson) => {
         console.log(respJson);
+        filteredSent = respJson.filter((item) => {
+            return item.bettor === '59937574a6285b4cecb4f74e'; // STILL HARD CODED!!!!!!!!
+        });
+        filteredReceived = respJson.filter((item) => {
+            return item.bettee === '59937574a6285b4cecb4f74e'; // STILL HARD CODED!!!!!!!!
+        });
         this.setState({
-            dataSource: ds.cloneWithRows(respJson)
+            dataSource: ds.cloneWithRows(filteredSent)
         })
     })
     .catch(console.log)
@@ -77,11 +91,20 @@ class PendingBetScreen extends React.Component {
     this.setState({menu: true})
   };
 
-  sentClick = () => {
-    this.setState({state: 'sent'})
+  clickChangeState = (string, json) => {
+      const ds = dsCreation();
+      this.setState({
+          state: string,
+          dataSource: ds.cloneWithRows(json)
+      })
   }
+
+  sentClick = () => {
+    this.clickChangeState('sent', filteredSent)
+  }
+
   receivedClick = () => {
-    this.setState({state: 'received'})
+    this.clickChangeState('received', filteredReceived)
   }
 
   navigateCreate = () => {
