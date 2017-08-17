@@ -106,7 +106,7 @@ class App extends React.Component {
                             shadowColor: '#000000',
                             shadowOpacity: 0.8,
                             shadowRadius: 3,
-                            backgroundColor: 'red',
+                            backgroundColor: '#365899',
                             height: '100%',
                             color: '#FFFFFF'
                         },
