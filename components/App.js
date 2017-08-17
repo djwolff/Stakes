@@ -129,10 +129,11 @@ class App extends React.Component {
                 type="overlay"
                 content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
                 ref = {(ref) => this._drawer = ref}
+                side="left"
                 tapToClose={true}
                 openDrawerOffset={0.2} // 20% gap on the right side of drawer
-                panCloseMask={1}
-                panOpenMask={1}
+                panCloseMask={0.2}
+                panOpenMask={0.2}
                 styles={{drawer: {
                             paddingTop: 20,
                             shadowColor: '#000000',

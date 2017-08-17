@@ -14,6 +14,8 @@ import {
   ImagePickerIOS
 } from 'react-native';
 import { MapView, Location, Permissions, Font } from 'expo';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 global.__DEV__ = false
 
@@ -27,6 +29,9 @@ class DrawerMenuScreen extends React.Component {
   render() {
     return (
         <View style={styles.container}>
+          <TouchableOpacity onPress={ () => {this.props.handleClose()} } style={[styles.close]}>
+            <Text style={styles.x}>X</Text>
+          </TouchableOpacity>
           <View style={styles.profile}>
             <View style={styles.headerprofile}>
               <Image
@@ -39,10 +44,20 @@ class DrawerMenuScreen extends React.Component {
               <Text style={styles.name}>Reyes</Text>
             </View>
           </View>
-          <Text styles={styles.text}>Drawer Menu</Text>
-          <TouchableOpacity onPress={ () => {this.props.handleClose()} } style={[styles.button, styles.buttonGreen]}>
-            <Text style={styles.buttonLabel}>Close</Text>
-          </TouchableOpacity>
+          <View style={styles.options}>
+            <Icon style={styles.optionText} name="bell">
+              <Text>     Pending Bets</Text>
+            </Icon>
+            <Icon style={styles.optionText} name="group">
+              <Text>     Invite a Friend</Text>
+            </Icon>
+            <Icon style={styles.optionText} name="cog">
+              <Text>     Settings</Text>
+            </Icon>
+            <Icon style={styles.optionText} name="sign-out">
+              <Text>     Log Out</Text>
+            </Icon>
+          </View>
         </View>
     )
   }
@@ -56,6 +71,17 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     justifyContent: 'center',
+  },
+  close: {
+    display: 'flex',
+    paddingRight: 30,
+    paddingTop: 20,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  x: {
+    color: 'white',
   },
   profile: {
     height: 140,
@@ -81,5 +107,16 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#3D516B'
+  },
+  options: {
+    display: 'flex',
+    paddingLeft: 15,
+  },
+  optionText: {
+    color: 'white',
+    fontSize: 23,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });

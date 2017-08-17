@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { MapView, Location, Permissions, Font } from 'expo';
-import Hamburger from 'react-native-hamburger';
 
 global.__DEV__ = false
 
@@ -23,9 +22,6 @@ global.__DEV__ = false
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      menu: false,
-    }
   }
   static navigationOptions = {
     header: null,
@@ -40,7 +36,10 @@ class Header extends React.Component {
               </Text>
             </TouchableOpacity>
           :
-            <Hamburger active={this.state.menu} color="white" onPress={ () => this.props.openControlPanel() }/>}
+          <TouchableOpacity onPress={ () => this.props.openControlPanel()}>
+            <Text style={styles.bar}>≡</Text>
+          </TouchableOpacity>
+          }
             <Text style={styles.title}>
               {this.props.name}
             </Text>
@@ -95,4 +94,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir',
     fontSize: 25,
   },
+  bar: {
+    color: 'white',
+    fontSize: 36,
+    paddingTop: 2,
+  }
 });
