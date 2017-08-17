@@ -52,16 +52,20 @@ class PendingBetScreen extends React.Component {
     .then((resp) => resp.json())
     .then((respJson) => {
         console.log('new response from server', respJson);
-        const userData = AsyncStorage.getItem('user');
-        filteredSent = respJson.filter((item) => {
-            return item.bettor === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
+        AsyncStorage.getItem('user')
+        .then((userData) => {
+            console.log('userdata', userData);
+            console.log('id', JSON.parse(userData).id);
+            filteredSent = respJson.filter((item) => {
+                return item.bettor === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
+            });
+            filteredReceived = respJson.filter((item) => {
+                return item.bettee === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
+            });
+            this.setState({
+                dataSource: ds.cloneWithRows(filteredSent)
+            })
         });
-        filteredReceived = respJson.filter((item) => {
-            return item.bettee === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
-        });
-        this.setState({
-            dataSource: ds.cloneWithRows(filteredSent)
-        })
     })
     .catch(console.log)
 
@@ -183,7 +187,7 @@ class PendingBetScreen extends React.Component {
             </View>
 
               <ListView
-
+                style={styles.list}
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) =>
                     <TouchableOpacity style={styles.eachBet}>
@@ -200,12 +204,11 @@ class PendingBetScreen extends React.Component {
                             </TouchableOpacity> :
                             null
                         }
-                    </TouchableOpacity>}
-                style={styles.list}
-                />
-            </View>
-          {/* </Drawer> */}
+                    </TouchableOpacity>
+                }
+              />
         </View>
+        //   {/* </Drawer> */}
       )
     }
   }
