@@ -55,7 +55,6 @@ class CreateBetScreen extends React.Component {
   openControlPanel = () => {
     this._drawer.open();
     this.setState({menu: true})
->>>>>>> 35e5d21537858881330397138130feb77e18c28e
   };
 
   submit() {
