@@ -5,6 +5,7 @@ import PendingBetScreen from './PendingBet';
 import DrawerMenuScreen from './DrawerMenu';
 import Header from './Header';
 import Drawer from 'react-native-drawer';
+import axios from 'axios';
 import {
   AsyncStorage,
   RefreshControl,
@@ -30,12 +31,43 @@ function handleCreateBet() {
 
 //Screens
 class App extends React.Component {
-
-    constructor(){
-        super();
-        this.closeControlPanel = this.closeControlPanel.bind(this);
-        this.openControlPanel = this.openControlPanel.bind(this);
+  constructor(props){
+    super(props);
+    this.closeControlPanel = this.closeControlPanel.bind(this);
+    this.openControlPanel = this.openControlPanel.bind(this);
+    const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.state = {
+        dataSource: ds.cloneWithRows([])
     }
+
+    fetch('https://stakes.herokuapp.com/feed', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+      })
+      .then((resp) => resp.json())
+      .then((respJson) => {
+          console.log(respJson);
+          this.setState({
+              dataSource: ds.cloneWithRows(respJson)
+          })
+      })
+      .catch(console.log)
+
+    // axios({
+    //     method: 'POST',
+    //     url: 'https://stakes.herokuapp.com/feed',
+    // })
+    // .then((response) => {
+    //     this.setState({
+    //         dataSource: ds.cloneWithRows(response)
+    //     })
+    // })
+    // .catch(console.log)
+  }
 
   static navigationOptions = {
     header: null
@@ -52,7 +84,7 @@ class App extends React.Component {
       this.props.navigation.setParams({
           handleCreateBet: this.createBet.bind(this),
           handleOpenControlPanel: this.openControlPanel.bind(this)
-      }) // Used to handle the headerRight navigation.
+      })
   }
 
   createBet() {
@@ -68,6 +100,7 @@ class App extends React.Component {
   }
 
   render() {
+      console.log('DATA SOURCE', this.state.dataSource);
     return (
       <View style={styles.container}>
           <Drawer
@@ -108,6 +141,16 @@ class App extends React.Component {
           <TouchableOpacity onPress={ () => {this.openControlPanel()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Open Control Panel</Text>
           </TouchableOpacity>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) =>
+                <TouchableOpacity style={styles.eachBet}>
+                    <Text style={styles.allText}>Bettor: {rowData.bettor}</Text>
+                    <Text style={styles.allText}>Bettee: {rowData.bettee}</Text>
+                    <Text style={styles.allText}>Content: {rowData.content}</Text>
+                    <Text style={styles.allText}>Wager: {rowData.wager}</Text>
+                </TouchableOpacity>}
+            />
           </Drawer>
       </View>
     )
@@ -164,4 +207,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white'
   },
+  eachBet: {
+      alignSelf: 'stretch',
+      padding: 10,
+      margin: 5,
+      borderRadius: 5,
+      backgroundColor: 'white',
+      border: '0.5px solid'
+  },
+  allText: {
+      fontFamily: 'Avenir'
+  }
 });

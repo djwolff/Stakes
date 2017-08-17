@@ -36,7 +36,6 @@ class PendingBetScreen extends React.Component {
                 <Text styles={styles.text}>Pending Bet</Text>
             </View>
         </View>
-
     )
   }
 }
