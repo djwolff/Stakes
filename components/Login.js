@@ -34,46 +34,16 @@ function logIn() {
     else{
       newUser()
       .then(function(user){
-        AsyncStorage.setItem('user',{
-          name: user.name,
-          id: user.id
-        })
+        console.log('THIS IS THE USER HERE**************',user.data);
+        AsyncStorage.setItem('user',JSON.stringify({
+          name: user.data.name,
+          id: user.data._id
+        }))
         Alert.alert(
           'Logged in!',
-          `Hi ${user.name}!`,
+          `Hi ${user.data.name}!`,
         );
       })
-      //     const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
-      //       permissions: [ 'public_profile', 'user_birthday' ]
-      //     });
-      //     console.log(type)
-      //   if (type === 'success') {
-      //     console.log('successful facebook login')
-      //     console.log(type, token)
-      //     // Get the user's name using Facebook's Graph API
-      //     const response = await fetch(
-      //       `https://graph.facebook.com/me?access_token=${token}`);
-      //     // console.log('made it past the post', await response.json())
-      //     // console.log('******************************', await response.json())
-      //     var resp = await axios({
-      //       method: 'post',
-      //       url: 'https://stakes.heroku.com/register',
-      //       data:{
-      //         facebookId: response.json().id,
-      //         access_token: token,
-      //         friends_list: [],
-      //         name: response.json().name
-      //       }
-      //     })
-      //     await AsyncStorage.setItem('user', JSON.stringify({
-      //         name: resp.data.result.parameters.name,
-      //         id: resp.data.result.parameters._id
-      //       }))
-      //     Alert.alert(
-      //       'Logged in!',
-      //       `Hi ${(await response.json()).name}!`,
-      //     );
-      //   }
     }
   })
 }
@@ -164,20 +134,23 @@ function newUser(){
           return resp.json();
         })
         .then(function(data) {
-          console.log(data)
           axios({
-            method: 'post',
             url: 'https://stakes.herokuapp.com/register',
+            method: 'post',
             data:{
               facebookId: data.id,
-              access_token: token,
+              access_token: response.token,
               friends_list: [],
               name: data.name
             }
           })
           .then(function(user){
+            console.log('*********I AM HERE NOW*********')
             console.log(user)
             resolve(user);
+          })
+          .catch((err)=>{
+            console.log(err)
           })
         })
       }else{
