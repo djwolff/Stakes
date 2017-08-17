@@ -52,11 +52,12 @@ class PendingBetScreen extends React.Component {
     .then((resp) => resp.json())
     .then((respJson) => {
         console.log('new response from server', respJson);
+        const userData = AsyncStorage.getItem('user');
         filteredSent = respJson.filter((item) => {
-            return item.bettor === '59937574a6285b4cecb4f74e'; // STILL HARD CODED!!!!!!!!
+            return item.bettor === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
         });
         filteredReceived = respJson.filter((item) => {
-            return item.bettee === '59937574a6285b4cecb4f74e'; // STILL HARD CODED!!!!!!!!
+            return item.bettee === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
         });
         this.setState({
             dataSource: ds.cloneWithRows(filteredSent)
