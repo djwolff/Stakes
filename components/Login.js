@@ -65,7 +65,7 @@ class LoginScreen extends React.Component {
   register() {
     logIn()
     console.log('im outisde of login')
-    // this.props.navigation.navigate('App')
+    this.props.navigation.navigate('App')
   }
 
   render() {

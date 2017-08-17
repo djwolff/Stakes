@@ -154,6 +154,8 @@ class PendingBetScreen extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
+            </View>
+
               <ListView
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) =>
@@ -163,8 +165,8 @@ class PendingBetScreen extends React.Component {
                         <Text style={styles.allText}>Content: {rowData.content}</Text>
                         <Text style={styles.allText}>Wager: {rowData.wager}</Text>
                     </TouchableOpacity>}
+                style={styles.list}
                 />
-            </View>
           </Drawer>
         </View>
       )
@@ -179,6 +181,7 @@ class PendingBetScreen extends React.Component {
       flex: 1,
       backgroundColor: '#f1f1f1',
       margin: 0,
+      display: 'inline'
       // justifyContent: 'center',
       // alignItems: 'center',
     },
@@ -229,6 +232,19 @@ class PendingBetScreen extends React.Component {
     },
     unusedText: {
       color: '#4ED2B6',
+    },
+    list: {
+      flex: 1,
+      height: '100%',
+      alignSelf: 'stretch',
+      backgroundColor: 'lightgrey',
+      width: '100%',
+      height: 60,
+      backgroundColor: 'white',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     eachBet: {
         alignSelf: 'stretch',

@@ -103,7 +103,7 @@ class CreateBetScreen extends React.Component {
               }
             }}
             >
-            <Header name="What's at stake?" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
+            <Header name="What's at stake?" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)}/>
             <View styles={styles.container}>
                 <Text> {this.state.user} bets {this.state.betee} {this.state.content} for {this.state.wager}</Text>
                 <Picker
