@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { MapView, Location, Permissions, Font } from 'expo';
+import Drawer from 'react-native-drawer';
 
 global.__DEV__ = false
 
