@@ -27,12 +27,22 @@ class DrawerMenuScreen extends React.Component {
   render() {
     return (
         <View style={styles.container}>
-            <View>
-                <Text styles={styles.text}>Drawer Menu</Text>
-                <TouchableOpacity onPress={ () => {this.props.handleClose()} } style={[styles.button, styles.buttonGreen]}>
-                  <Text style={styles.buttonLabel}>Close</Text>
-                </TouchableOpacity>
+          <View style={styles.profile}>
+            <View style={styles.headerprofile}>
+              <Image
+                style={{width: 100, height: 100}}
+                source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+              />
             </View>
+            <View style={styles.headerprofile}>
+              <Text style={styles.name}>Mika</Text>
+              <Text style={styles.name}>Reyes</Text>
+            </View>
+          </View>
+          <Text styles={styles.text}>Drawer Menu</Text>
+          <TouchableOpacity onPress={ () => {this.props.handleClose()} } style={[styles.button, styles.buttonGreen]}>
+            <Text style={styles.buttonLabel}>Close</Text>
+          </TouchableOpacity>
         </View>
     )
   }
@@ -46,6 +56,25 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     justifyContent: 'center',
+  },
+  profile: {
+    height: 140,
+    width: '100%',
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  headerprofile: {
+    display: 'flex',
+    padding: 10,
+    paddingLeft: 15,
+    float: 'left',
+  },
+  name: {
+    fontFamily: 'Avenir',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   text: {
     fontFamily: 'Avenir',
