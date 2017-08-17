@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Picker,
   TouchableOpacity,
   TextInput,
   ListView,
@@ -27,7 +28,7 @@ class CreateBetScreen extends React.Component {
   };
   state = {
     username: 'Mika',
-    betee: 'Johnathan', 
+    betee: 'Johnathan',
     bet: "can't run around naked in front of Horizons",
     wager: "3 bottles of soylent"
   };

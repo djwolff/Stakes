@@ -72,7 +72,7 @@ class App extends React.Component {
       })
       .catch((err) => console.log('error: ' + err))
   }
-  
+
   createBet() {
     this.props.navigation.navigate('CreateBet')
   }
@@ -121,9 +121,6 @@ class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => {this.pendingBet()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to see Pending Bets</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ () => {this.openControlPanel()} } style={[styles.button, styles.buttonGreen]}>
-            <Text style={styles.buttonLabel}>Open Control Panel</Text>
           </TouchableOpacity>
           </Drawer>
       </View>
@@ -175,7 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   buttonGreen: {
-    backgroundColor: '#2ECC40'
+    backgroundColor: '#4ED2B6'
   },
   buttonLabel: {
     fontFamily: 'Avenir',
