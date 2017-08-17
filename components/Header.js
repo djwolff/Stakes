@@ -39,11 +39,16 @@ class Header extends React.Component {
             <Text style={styles.title}>
               {this.props.name}
             </Text>
-            <TouchableOpacity onPress={() => this.navigateCreate()}>
+            {this.props.navigatecreate ? <TouchableOpacity onPress={() => this.props.navigatecreate()}>
               <Text style={{fontSize: 28, color: 'white'}}>
                 +
               </Text>
             </TouchableOpacity>
+          :
+          <TouchableOpacity >
+            <Text style={{fontSize: 28, color: 'white'}}>
+            </Text>
+          </TouchableOpacity>}
           </View>
         </View>
     )

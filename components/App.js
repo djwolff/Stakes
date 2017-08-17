@@ -46,19 +46,19 @@ class App extends React.Component {
     }
 
     fetch('https://stakes.herokuapp.com/feed', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-      })
-      .then((resp) => resp.json())
-      .then((respJson) => {
-          console.log(respJson);
-          this.setState({
-              dataSource: ds.cloneWithRows(respJson)
-          })
-      })
-      .catch(console.log)
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+    })
+    .then((resp) => resp.json())
+    .then((respJson) => {
+        console.log(respJson);
+        this.setState({
+            dataSource: ds.cloneWithRows(respJson)
+        })
+    })
+    .catch(console.log)
   }
 
   static navigationOptions = {
@@ -108,12 +108,9 @@ class App extends React.Component {
                             shadowColor: '#000000',
                             shadowOpacity: 0.8,
                             shadowRadius: 3,
-                            backgroundColor: 'red',
+                            backgroundColor: '#365899',
                             height: '100%',
                             color: '#FFFFFF'
-                        },
-                        main: {
-                            padding: 3
                         }}}
                 tweenHandler={(ratio) => {
                     return {
@@ -128,9 +125,6 @@ class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={ () => {this.pendingBet()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to see Pending Bets</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={ () => {this.openControlPanel()} } style={[styles.button, styles.buttonGreen]}>
-            <Text style={styles.buttonLabel}>Open Control Panel</Text>
           </TouchableOpacity>
           <ListView
             dataSource={this.state.dataSource}
@@ -192,7 +186,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   buttonGreen: {
-    backgroundColor: '#2ECC40'
+    backgroundColor: '#4ED2B6'
   },
   buttonLabel: {
     fontFamily: 'Avenir',
