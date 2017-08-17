@@ -35,7 +35,12 @@ class Header extends React.Component {
     return (
         <View style={styles.header}>
           <View style={styles.borderMenu}>
-            <Hamburger active={this.state.menu} color="white" onPress={ () => this.props.openControlPanel() }/>
+            {this.props.name === "Login to Stakes!" ? <TouchableOpacity >
+              <Text style={{fontSize: 28, color: 'white'}}>
+              </Text>
+            </TouchableOpacity>
+          :
+            <Hamburger active={this.state.menu} color="white" onPress={ () => this.props.openControlPanel() }/>}
             <Text style={styles.title}>
               {this.props.name}
             </Text>
@@ -46,7 +51,7 @@ class Header extends React.Component {
             </TouchableOpacity>
           :
           <TouchableOpacity >
-            <Text style={{fontSize: 28, color: 'white'}}>
+            <Text style={{fontSize: 28, color: 'white'}}> {' '}
             </Text>
           </TouchableOpacity>}
           </View>
@@ -64,18 +69,18 @@ const styles = StyleSheet.create({
     height: 50,
     width: 720,
     // alignSelf: 1,
-    backgroundColor: 'skyblue'
+    backgroundColor: '#3D516B'
   },
   text: {
     color: 'orange',
     fontFamily: 'Avenir',
   },
   header: {
-    backgroundColor: 'steelblue',
+    backgroundColor: '#3D516B',
     height: 75,
     width: '100%',
     paddingTop: 10,
-    display: 'inlineBlock'
+    display: 'flex'
   },
   borderMenu: {
     padding: 20,

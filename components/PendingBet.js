@@ -154,9 +154,9 @@ class PendingBetScreen extends React.Component {
             shadowColor: '#000000',
             shadowOpacity: 0.8,
             shadowRadius: 3,
-            backgroundColor: '#365899',
             height: '100%',
-            color: '#FFFFFF'
+            color: '#FFFFFF',
+            backgroundColor: '#3D516B',
           }}}
           tweenHandler={(ratio) => {
             return {
@@ -180,6 +180,8 @@ class PendingBetScreen extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
+            </View>
+
               <ListView
 
                 dataSource={this.state.dataSource}
@@ -199,6 +201,7 @@ class PendingBetScreen extends React.Component {
                             null
                         }
                     </TouchableOpacity>}
+                style={styles.list}
                 />
             </View>
           {/* </Drawer> */}
@@ -215,13 +218,9 @@ class PendingBetScreen extends React.Component {
     //   flex: 1,
     //   backgroundColor: '#f1f1f1',
     //   margin: 0,
+    //   display: 'inline'
     //   // justifyContent: 'center',
     //   // alignItems: 'center',
-    // },
-    // button: {
-    //     borderRadius: 5,
-    //     backgroundColor: 'green',
-    //     padding: 5
     // },
     // text: {
     //   fontFamily: 'Avenir',
@@ -270,6 +269,19 @@ class PendingBetScreen extends React.Component {
     // },
     // unusedText: {
     //   color: '#4ED2B6',
+    // },
+    // list: {
+    //   flex: 1,
+    //   height: '100%',
+    //   alignSelf: 'stretch',
+    //   backgroundColor: 'lightgrey',
+    //   width: '100%',
+    //   height: 60,
+    //   backgroundColor: 'white',
+    //   display: 'flex',
+    //   flexDirection: 'row',
+    //   alignItems: 'center',
+    //   justifyContent: 'center'
     // },
     // eachBet: {
     //     alignSelf: 'stretch',

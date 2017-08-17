@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import DrawerMenuScreen from './DrawerMenu';
 import axios from 'axios';
 import {
   AsyncStorage,
@@ -77,7 +78,6 @@ class CreateBetScreen extends React.Component {
 
   render() {
     return (
-        <View>
           <Drawer
             type="overlay"
             content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
@@ -91,7 +91,7 @@ class CreateBetScreen extends React.Component {
               shadowColor: '#000000',
               shadowOpacity: 0.8,
               shadowRadius: 3,
-              backgroundColor: 'red',
+              backgroundColor: '#3D516B',
               height: '100%',
               color: '#FFFFFF'
             }}}
@@ -102,36 +102,37 @@ class CreateBetScreen extends React.Component {
               }
             }}
             >
-            <Header name="What's at stake?" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
-            <View styles={styles.container}>
-                <Text> {this.state.user} bets {this.state.betee} {this.state.content} for {this.state.wager}</Text>
-                <Picker
-                  selectedValue={this.state.betee}
-                  onValueChange={(itemValue, itemIndex) => this.setState({betee: itemValue})}>
-                  {names.map((name) => {
-                    return <Picker.Item label={name} value={name} />
-                  })}
-                </Picker>
-                <TextInput
-                  style={{borderWidth: 0.5}}
-                  multiline = {true}
-                  numberOfLines = {6}
-                  onChangeText={(text) => this.setState({content: text})}
-                  value={this.state.content}>
-                </TextInput>
-                <TextInput
-                  style={{borderWidth: 0.5}}
-                  multiline = {true}
-                  numberOfLines = {3}
-                  onChangeText={(text) => this.setState({wager: text})}
-                  value={this.state.wager}>
-                </TextInput>
-                <TouchableOpacity onPress={ () => {this.submit()} } style={[styles.button, styles.buttonGreen]}>
-                  <Text style={styles.buttonLabel}>Submit</Text>
-                </TouchableOpacity>
+            <View>
+              <Header name="What's at stake?" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)}/>
+              <View styles={styles.container}>
+                  <Text> {this.state.user} bets {this.state.betee} {this.state.content} for {this.state.wager}</Text>
+                  <Picker
+                    selectedValue={this.state.betee}
+                    onValueChange={(itemValue, itemIndex) => this.setState({betee: itemValue})}>
+                    {names.map((name) => {
+                      return <Picker.Item label={name} value={name} />
+                    })}
+                  </Picker>
+                  <TextInput
+                    style={{borderWidth: 0.5}}
+                    multiline = {true}
+                    numberOfLines = {6}
+                    onChangeText={(text) => this.setState({content: text})}
+                    value={this.state.content}>
+                  </TextInput>
+                  <TextInput
+                    style={{borderWidth: 0.5}}
+                    multiline = {true}
+                    numberOfLines = {3}
+                    onChangeText={(text) => this.setState({wager: text})}
+                    value={this.state.wager}>
+                  </TextInput>
+                  <TouchableOpacity onPress={ () => {this.submit()} } style={[styles.button, styles.buttonGreen]}>
+                    <Text style={styles.buttonLabel}>Submit</Text>
+                  </TouchableOpacity>
+              </View>
             </View>
           </Drawer>
-        </View>
     )
   }
 }
