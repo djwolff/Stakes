@@ -35,7 +35,12 @@ class Header extends React.Component {
     return (
         <View style={styles.header}>
           <View style={styles.borderMenu}>
-            <Hamburger active={this.state.menu} color="white" onPress={ () => this.props.openControlPanel() }/>
+            {this.props.name === "Login to Stakes!" ? <TouchableOpacity >
+              <Text style={{fontSize: 28, color: 'white'}}>
+              </Text>
+            </TouchableOpacity>
+          :
+            <Hamburger active={this.state.menu} color="white" onPress={ () => this.props.openControlPanel() }/>}
             <Text style={styles.title}>
               {this.props.name}
             </Text>
