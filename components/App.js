@@ -42,21 +42,6 @@ class App extends React.Component {
     this.state = {
         dataSource: ds.cloneWithRows([])
     }
-
-    fetch('https://stakes.herokuapp.com/feed', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-    })
-    .then((resp) => resp.json())
-    .then((respJson) => {
-        console.log(respJson);
-        this.setState({
-            dataSource: ds.cloneWithRows(respJson)
-        })
-    })
-    .catch(console.log)
   }
 
   static navigationOptions = {
@@ -75,6 +60,23 @@ class App extends React.Component {
           handleCreateBet: this.createBet.bind(this),
           handleOpenControlPanel: this.openControlPanel.bind(this)
       })
+      const ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
+      });
+      fetch('https://stakes.herokuapp.com/feed', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+      })
+      .then((resp) => resp.json())
+      .then((respJson) => {
+          console.log(respJson);
+          this.setState({
+              dataSource: ds.cloneWithRows(respJson)
+          })
+      })
+      .catch(console.log)
   }
 
   createBet() {

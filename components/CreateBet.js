@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import axios from 'axios'
+import axios from 'axios';
 import {
   AsyncStorage,
   RefreshControl,
@@ -29,12 +29,13 @@ class CreateBetScreen extends React.Component {
       header: null,
   };
   state = {
-    user: 'Mika',
-    betee: 'Johnathan',
+    user: '599513d6964b1a00118bd777',
+    betee: '59951445964b1a00118bd778',
     content: "can't run around naked in front of Horizons",
     wager: "3 bottles of soylent"
   };
   submit() {
+    console.log('this is the damn state', this.state)
     axios.post('https://stakes.herokuapp.com/createBet', {
       wager: this.state.wager,
       content: this.state.content,
@@ -55,7 +56,7 @@ class CreateBetScreen extends React.Component {
         <View>
             <Header />
             <View styles={styles.container}>
-                <Text> {this.state.user} bets {this.state.betee} {this.state.bet} for {this.state.wager}</Text>
+                <Text> {this.state.user} bets {this.state.betee} {this.state.content} for {this.state.wager}</Text>
                 <Picker
                   selectedValue={this.state.betee}
                   onValueChange={(itemValue, itemIndex) => this.setState({betee: itemValue})}>
