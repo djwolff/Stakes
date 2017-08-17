@@ -68,17 +68,30 @@ openControlPanel = () => {
   this._drawer.open();
   this.setState({menu: true})
 };
-resolve= () => {
+resolve = () => {
   Alert.alert(
     'Who won?!',
     [
-      {text: this.state.bet.bettor, onPress: () => winner(this.state.bet.bettor)},
-      {text: this.state.bet.bettee, onPress: () => winner(this.state.bet.bettor)}
+      {text: this.state.bet.bettor, onPress: () => this.winner(this.state.bet.bettor)},
+      {text: this.state.bet.bettee, onPress: () => this.winner(this.state.bet.bettor)},
+      {text: Cancel, onPress: () => {}}
     ],
     {cancelable: false}
   )
 }
+winner = (winner) => {
+  axios({
+    url:'https://stakes.herokuapp.com/viewOneBet/'+req.params.id,
+    method: 'post',
+    data:{
 
+    }
+  })
+  .then(function(bet){
+    if(bet.bettor === user.id){
+      this.setState({my_bet:true});
+    }
+}
 render() {
   return (
     <View styles={styles.container}>
