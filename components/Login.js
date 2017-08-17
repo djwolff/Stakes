@@ -21,29 +21,68 @@ import axios from 'axios'
 
 global.__DEV__ = false
 
-async function logIn() {
-  const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
-      permissions: [ 'public_profile', 'user_birthday', 'user_friends' ], behavior: 'system'
-    });
-  if (type === 'success') {
-    console.log('successful facebook login')
-    console.log(type, token)
-    // Get the user's name using Facebook's Graph API
-    const response = await fetch(
-      `https://graph.facebook.com/me?access_token=${token}`);
-    // console.log('made it past the post', await response.json())
-    Alert.alert(
-      'Logged in!',
-      `Hi ${(await response.json()).name}!`,
-    );
-  }
+function logIn() {
+  AsyncStorage.getItem('user')
+  .then(function(user){
+    console.log('********THIS',user)
+    if(user){
+      Alert.alert(
+        `Hey ${JSON.parse(user).name}!`,
+        'You already logged in!'
+      )
+    }
+    else{
+      newUser()
+      .then(function(user){
+        AsyncStorage.setItem('user',{
+          name: user.name,
+          id: user.id
+        })
+        Alert.alert(
+          'Logged in!',
+          `Hi ${user.name}!`,
+        );
+      })
+      //     const { type, token } = await Facebook.logInWithReadPermissionsAsync("507277226286173", {
+      //       permissions: [ 'public_profile', 'user_birthday' ]
+      //     });
+      //     console.log(type)
+      //   if (type === 'success') {
+      //     console.log('successful facebook login')
+      //     console.log(type, token)
+      //     // Get the user's name using Facebook's Graph API
+      //     const response = await fetch(
+      //       `https://graph.facebook.com/me?access_token=${token}`);
+      //     // console.log('made it past the post', await response.json())
+      //     // console.log('******************************', await response.json())
+      //     var resp = await axios({
+      //       method: 'post',
+      //       url: 'https://stakes.heroku.com/register',
+      //       data:{
+      //         facebookId: response.json().id,
+      //         access_token: token,
+      //         friends_list: [],
+      //         name: response.json().name
+      //       }
+      //     })
+      //     await AsyncStorage.setItem('user', JSON.stringify({
+      //         name: resp.data.result.parameters.name,
+      //         id: resp.data.result.parameters._id
+      //       }))
+      //     Alert.alert(
+      //       'Logged in!',
+      //       `Hi ${(await response.json()).name}!`,
+      //     );
+      //   }
+    }
+  })
 }
 
 
 //Screens
 class LoginScreen extends React.Component {
   static navigationOptions = {
-     header: null
+    header: null
   };
   state = {
     fontLoaded: false,
@@ -62,13 +101,13 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View>
-          <Header/>
-          <View style={styles.container}>
-            <Text style={styles.textBig}>Login to Stakes!</Text>
-            <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>
-              <Text style={styles.buttonLabel}>Tap to Register with Facebook</Text>
-            </TouchableOpacity>
-          </View>
+      <Header/>
+      <View style={styles.container}>
+      <Text style={styles.textBig}>Login to Stakes!</Text>
+      <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={ () => {this.register()} }>
+      <Text style={styles.buttonLabel}>Tap to Register with Facebook</Text>
+      </TouchableOpacity>
+      </View>
       </View>
     )
   }
@@ -110,3 +149,43 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
+
+function newUser(){
+  return new Promise(function(resolve, reject){
+    Facebook.logInWithReadPermissionsAsync("507277226286173", {
+      permissions: [ 'public_profile', 'user_birthday' ]
+    })
+    .then(function(response){
+      console.log(response)
+      if(response.type ==='success'){
+        console.log('successful facebook login')
+        fetch(`https://graph.facebook.com/me?access_token=${response.token}`)
+        .then(function(resp){
+          return resp.json();
+        })
+        .then(function(data) {
+          console.log(data)
+          axios({
+            method: 'post',
+            url: 'https://stakes.herokuapp.com/register',
+            data:{
+              facebookId: data.id,
+              access_token: token,
+              friends_list: [],
+              name: data.name
+            }
+          })
+          .then(function(user){
+            console.log(user)
+            resolve(user);
+          })
+        })
+      }else{
+        reject('login failed or canceled');
+      }
+    })
+    .catch(function(err){
+      reject(err)
+    })
+  })
+}

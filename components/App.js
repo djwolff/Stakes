@@ -5,7 +5,11 @@ import PendingBetScreen from './PendingBet';
 import DrawerMenuScreen from './DrawerMenu';
 import Header from './Header';
 import Drawer from 'react-native-drawer';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+import Hamburger from 'react-native-hamburger';
+>>>>>>> c9ac1a463d9c2f27c41ca8411c0cecf39ea5d2e8
 import {
   AsyncStorage,
   RefreshControl,
@@ -56,17 +60,6 @@ class App extends React.Component {
           })
       })
       .catch(console.log)
-
-    // axios({
-    //     method: 'POST',
-    //     url: 'https://stakes.herokuapp.com/feed',
-    // })
-    // .then((response) => {
-    //     this.setState({
-    //         dataSource: ds.cloneWithRows(response)
-    //     })
-    // })
-    // .catch(console.log)
   }
 
   static navigationOptions = {
@@ -130,8 +123,7 @@ class App extends React.Component {
                     }
                 }}
             >
-          <Header />
-          <Text style={styles.text}>This is cool.</Text>
+          <Header name="Login" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)}/>
           <TouchableOpacity onPress={ () => {this.login()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to Login</Text>
           </TouchableOpacity>
@@ -181,7 +173,9 @@ export default StackNavigator({
 //Styles
 const styles = StyleSheet.create({
   container: {
-    flex: '1',
+    flex: 1,
+    margin: 0,
+    backgroundColor: '#f1f1f1'
     // justifyContent: 'center',
     // alignItems: 'center',
   },
