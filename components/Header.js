@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     height: 75,
     width: '100%',
     paddingTop: 10,
-    display: 'inlineBlock'
+    display: 'flex'
   },
   borderMenu: {
     padding: 20,

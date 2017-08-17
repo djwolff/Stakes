@@ -22,12 +22,12 @@ import Header from './Header';
 global.__DEV__ = false
 
 //Screens
-class PendingBetScreen extends React.Component {
+class SingleBet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bets: [],
-      menu: false,
+      bet: {},
+      my_bet=false
     };
     this.closeControlPanel = this.closeControlPanel.bind(this);
     this.openControlPanel = this.openControlPanel.bind(this);
@@ -37,6 +37,22 @@ class PendingBetScreen extends React.Component {
     title: 'Pending Bets',
   };
 
+  componentWillMount(){
+    AsyncStorage.getItem('user')
+    .then(function(user){
+        axios({
+          url:'https://stakes.herokuapp.com/viewOneBet/'+req.params.id,
+          method: 'post'
+        })
+        .then(function(bet){
+          if(bet.bettor === user.id){
+            this.setState({my_bet:true});
+          }
+          this.setState({bet:bet});
+        })
+      }
+    })
+  }
   componentDidMount() {
     this.props.navigation.setParams({
       handleOpenControlPanel: this.openControlPanel.bind(this)
@@ -81,15 +97,18 @@ class PendingBetScreen extends React.Component {
             }
           }}
           >
-            <Header name="Make a bet" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
-
+            <Header name={this.state.bet.wager} openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
           </Drawer>
+          <Text style={styles.allText}>Bettor: {this.state.bet.bettor}</Text>
+          <Text style={styles.allText}>Bettee: {this.state.bet.bettee}</Text>
+          <Text style={styles.allText}>Content: {this.state.bet.content}</Text>
+          <Text style={styles.allText}>Wager: {this.state.bet.wager}</Text>
         </View>
       )
     }
   }
 
-  export default PendingBetScreen;
+  export default SingleBet;
 
   //Styles
   const styles = StyleSheet.create({
@@ -148,4 +167,7 @@ class PendingBetScreen extends React.Component {
     unusedText: {
       color: '#4ED2B6',
     },
+    allText: {
+      fontFamily: 'Avenir'
+    }
   });
