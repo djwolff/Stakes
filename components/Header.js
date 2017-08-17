@@ -51,7 +51,7 @@ class Header extends React.Component {
             </TouchableOpacity>
           :
           <TouchableOpacity >
-            <Text style={{fontSize: 28, color: 'white'}}>
+            <Text style={{fontSize: 28, color: 'white'}}> {' '}
             </Text>
           </TouchableOpacity>}
           </View>
