@@ -98,7 +98,7 @@ class PendingBetScreen extends React.Component {
             }
           }}
           >
-            <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)}/>
+            <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
 
             <View style={styles.control}>
               <View style={styles.picker}>
