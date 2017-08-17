@@ -7,6 +7,7 @@ import Header from './Header';
 import Drawer from 'react-native-drawer';
 import axios from 'axios';
 import Hamburger from 'react-native-hamburger';
+import SingleBetScreen from './SingleBet';
 import {
   AsyncStorage,
   RefreshControl,
@@ -29,6 +30,9 @@ global.__DEV__ = false
 function handleCreateBet() {
     this.props.navigation.navigate('Create')
 }
+
+let allFeedArray = [];
+let myFeedArray = [];
 
 //Screens
 class App extends React.Component {
@@ -77,11 +81,22 @@ class App extends React.Component {
               },
           })
           .then((resp) => resp.json())
-          .then((respJson) => {
-              console.log(respJson);
-              this.setState({
-                  dataSource: ds.cloneWithRows(respJson)
+          .then((allFeed) => {
+              fetch('https://stakes.herokuapp.com/myBets', {
+                  method: 'POST',
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
               })
+              .then((resp) => resp.json())
+              .then((myFeed) => {
+                  myFeedArray = myFeed;
+                  allFeedArray = allFeed;
+                  this.setState({
+                      dataSource: ds.cloneWithRows(allFeedArray)
+                  })
+              })
+              .catch(console.log)
           })
           .catch(console.log)
         }
@@ -110,15 +125,36 @@ class App extends React.Component {
   }
 
   createBet() {
-    this.props.navigation.navigate('CreateBet')
+    this.props.navigation.navigate('CreateBet');
   }
 
   login() {
-    this.props.navigation.navigate('Login')
+    this.props.navigation.navigate('Login');
   }
 
   pendingBet() {
-    this.props.navigation.navigate('PendingBet')
+    this.props.navigation.navigate('PendingBet');
+  }
+  singleBet(id) {
+    this.props.navigation.navigate('SingleBet', {id: id});
+  }
+
+  myFeedClick = () => {
+    const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.setState({
+        dataSource: ds.cloneWithRows(myFeedArray)
+    })
+  }
+
+  allFeedClick = () => {
+      const ds = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2
+      });
+      this.setState({
+          dataSource: ds.cloneWithRows(allFeedArray)
+      })
   }
 
   render() {
@@ -157,10 +193,20 @@ class App extends React.Component {
           <TouchableOpacity onPress={ () => {this.pendingBet()} } style={[styles.button, styles.buttonGreen]}>
             <Text style={styles.buttonLabel}>Tap to see Pending Bets</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.myFeedClick()}>
+            <Text>
+              MY FEED
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.allFeedClick()}>
+            <Text>
+              GLOBAL FEED
+            </Text>
+          </TouchableOpacity>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={(rowData) =>
-                <TouchableOpacity style={styles.eachBet}>
+                <TouchableOpacity style={styles.eachBet} onPress={ () =>{this.singleBet(rowData._id)}}>
                     <Text style={styles.allText}>Bettor: {rowData.bettor}</Text>
                     <Text style={styles.allText}>Bettee: {rowData.bettee}</Text>
                     <Text style={styles.allText}>Content: {rowData.content}</Text>
@@ -190,6 +236,12 @@ export default StackNavigator({
   DrawerMenu: {
     screen: DrawerMenuScreen,
   },
+  SingleBet: {
+    navigationOptions:{
+      header: null
+    }
+    screen: SingleBetScreen,
+  }
 }, {initialRouteName: 'App'}
 );
 
