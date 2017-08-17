@@ -25,15 +25,46 @@ var names = ['Johnathan', 'Steven', 'Mika', 'David']
 
 //Screens
 class CreateBetScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: 'Mika',
+      betee: 'Johnathan',
+      bet: "can't run around naked in front of Horizons",
+      wager: "3 bottles of soylent"
+    };
+    this.closeControlPanel = this.closeControlPanel.bind(this);
+    this.openControlPanel = this.openControlPanel.bind(this);
+  };
+
   static navigationOptions = {
       header: null,
   };
+<<<<<<< HEAD
   state = {
     user: '599513d6964b1a00118bd777',
     betee: '59951445964b1a00118bd778',
     content: "can't run around naked in front of Horizons",
     wager: "3 bottles of soylent"
+=======
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      handleOpenControlPanel: this.openControlPanel.bind(this)
+    }) // Used to handle the headerRight navigation.
   };
+
+  closeControlPanel = () => {
+    this._drawer.close();
+    this.setState({menu: false})
+  };
+
+  openControlPanel = () => {
+    this._drawer.open();
+    this.setState({menu: true})
+>>>>>>> 35e5d21537858881330397138130feb77e18c28e
+  };
+
   submit() {
     console.log('this is the damn state', this.state)
     axios.post('https://stakes.herokuapp.com/createBet', {
@@ -54,7 +85,31 @@ class CreateBetScreen extends React.Component {
   render() {
     return (
         <View>
-            <Header />
+          <Drawer
+            type="overlay"
+            content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
+            ref = {(ref) => this._drawer = ref}
+            tapToClose={true}
+            openDrawerOffset={0.2} // 20% gap on the right side of drawer
+            panCloseMask={1}
+            panOpenMask={1}
+            styles={{drawer: {
+              paddingTop: 20,
+              shadowColor: '#000000',
+              shadowOpacity: 0.8,
+              shadowRadius: 3,
+              backgroundColor: 'red',
+              height: '100%',
+              color: '#FFFFFF'
+            }}}
+            tweenHandler={(ratio) => {
+              return {
+                drawer: { shadowRadius: Math.min(ratio*5*5, 5) },
+                main: { opacity:(2-ratio)/2 },
+              }
+            }}
+            >
+            <Header name="What's at stake?" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
             <View styles={styles.container}>
                 <Text> {this.state.user} bets {this.state.betee} {this.state.content} for {this.state.wager}</Text>
                 <Picker
@@ -82,6 +137,7 @@ class CreateBetScreen extends React.Component {
                   <Text style={styles.buttonLabel}>Submit</Text>
                 </TouchableOpacity>
             </View>
+          </Drawer>
         </View>
     )
   }
