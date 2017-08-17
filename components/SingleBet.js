@@ -118,7 +118,7 @@ class SingleBet extends React.Component {
         }
       }}
       >
-      <Header name={this.state.bet.wager} openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
+      <Text> I got here! </Text>
       <Text style={styles.allText}>Bettor: {this.state.bet.bettor}</Text>
       <Text style={styles.allText}>Bettee: {this.state.bet.bettee}</Text>
       <Text style={styles.allText}>Content: {this.state.bet.content}</Text>
