@@ -51,7 +51,7 @@ class PendingBetScreen extends React.Component {
     })
     .then((resp) => resp.json())
     .then((respJson) => {
-        console.log(respJson);
+        console.log('new response from server', respJson);
         filteredSent = respJson.filter((item) => {
             return item.bettor === '59937574a6285b4cecb4f74e'; // STILL HARD CODED!!!!!!!!
         });
@@ -91,31 +91,56 @@ class PendingBetScreen extends React.Component {
     this.setState({menu: true})
   };
 
-  clickChangeState = (string, json) => {
+  clickChangeState = (string, array) => {
+      console.log('click change state', string, array);
       const ds = dsCreation();
       this.setState({
           state: string,
-          dataSource: ds.cloneWithRows(json)
+          dataSource: ds.cloneWithRows(array)
       })
   }
 
   sentClick = () => {
-    this.clickChangeState('sent', filteredSent)
+    this.clickChangeState('sent', filteredSent);
   }
 
   receivedClick = () => {
-    this.clickChangeState('received', filteredReceived)
+    this.clickChangeState('received', filteredReceived);
   }
 
   navigateCreate = () => {
     this.props.navigation.navigate('CreateBet');
   }
 
+  acceptBet = (betId) => {
+    fetch('https://stakes.herokuapp.com/updatePendingBets', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          betId: betId,
+      }),
+    })
+    .then((resp) => resp.json())
+    .then((updatedBet) => {
+        console.log('updated bet!', updatedBet);
+        const newArray = [];
+        console.log('old filtered received', filteredReceived);
+        filteredReceived = filteredReceived.filter((bet) => {
+            console.log(bet._id, updatedBet._id);
+            console.log(bet._id !== updatedBet._id);
+            return bet._id !== updatedBet._id; // STILL HARD CODED!!!!!!!!
+        });
+        console.log('new filtered received', filteredReceived);
+        this.clickChangeState(this.state.state, filteredReceived);
+    })
+  }
+
   render() {
-      console.log('DATA SOURCE', this.state.dataSource);
     return (
       <View styles={styles.container}>
-        <Drawer
+        {/* <Drawer
           type="overlay"
           content={<DrawerMenuScreen handleClose={() => this.closeControlPanel()}/>}
           ref = {(ref) => this._drawer = ref}
@@ -138,7 +163,7 @@ class PendingBetScreen extends React.Component {
               main: { opacity:(2-ratio)/2 },
             }
           }}
-          >
+          > */}
             <Header name="Pending Bets" openControlPanel={this.openControlPanel.bind(this)} closeControlPanel={this.closeControlPanel.bind(this)} navigatecreate={this.navigateCreate.bind(this)}/>
 
             <View style={styles.control}>
@@ -155,6 +180,7 @@ class PendingBetScreen extends React.Component {
                 </TouchableOpacity>
               </View>
               <ListView
+
                 dataSource={this.state.dataSource}
                 renderRow={(rowData) =>
                     <TouchableOpacity style={styles.eachBet}>
@@ -162,10 +188,19 @@ class PendingBetScreen extends React.Component {
                         <Text style={styles.allText}>Bettee: {rowData.bettee}</Text>
                         <Text style={styles.allText}>Content: {rowData.content}</Text>
                         <Text style={styles.allText}>Wager: {rowData.wager}</Text>
+                        {
+                            this.state.state === 'received' ?
+                            <TouchableOpacity style={styles.button} onPress={() => this.acceptBet(rowData._id)}>
+                              <Text>
+                                ACCEPT THE BET
+                              </Text>
+                            </TouchableOpacity> :
+                            null
+                        }
                     </TouchableOpacity>}
                 />
             </View>
-          </Drawer>
+          {/* </Drawer> */}
         </View>
       )
     }
@@ -175,70 +210,75 @@ class PendingBetScreen extends React.Component {
 
   //Styles
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#f1f1f1',
-      margin: 0,
-      // justifyContent: 'center',
-      // alignItems: 'center',
-    },
-    text: {
-      fontFamily: 'Avenir',
-    },
-    containerFull: {
-      flex: 1,
-      padding: 3,
-      alignItems: 'stretch',
-      backgroundColor: '#F5FCFF',
-    },
-    control: {
-      width: '100%',
-      height: 60,
-      backgroundColor: 'white',
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    picker: {
-      borderRadius: 10,
-      borderColor: '#4ED2B6',
-      borderWidth: 4,
-      width: '90%',
-      height: '70%',
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    },
-    selectedDiv: {
-      height: '100%',
-      width: '50%',
-      backgroundColor: '#4ED2B6',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    selectedText: {
-      color: 'white',
-    },
-    unusedDiv: {
-      height: '100%',
-      width: '50%',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    unusedText: {
-      color: '#4ED2B6',
-    },
-    eachBet: {
-        alignSelf: 'stretch',
-        padding: 10,
-        margin: 5,
-        borderRadius: 5,
-        backgroundColor: 'white',
-        border: '0.5px solid'
-    },
-    allText: {
-        fontFamily: 'Avenir'
-    }
+    // container: {
+    //   flex: 1,
+    //   backgroundColor: '#f1f1f1',
+    //   margin: 0,
+    //   // justifyContent: 'center',
+    //   // alignItems: 'center',
+    // },
+    // button: {
+    //     borderRadius: 5,
+    //     backgroundColor: 'green',
+    //     padding: 5
+    // },
+    // text: {
+    //   fontFamily: 'Avenir',
+    // },
+    // containerFull: {
+    //   flex: 1,
+    //   padding: 3,
+    //   alignItems: 'stretch',
+    //   backgroundColor: '#F5FCFF',
+    // },
+    // control: {
+    //   width: '100%',
+    //   height: 60,
+    //   backgroundColor: 'white',
+    //   display: 'flex',
+    //   flexDirection: 'row',
+    //   alignItems: 'center',
+    //   justifyContent: 'center'
+    // },
+    // picker: {
+    //   borderRadius: 10,
+    //   borderColor: '#4ED2B6',
+    //   borderWidth: 4,
+    //   width: '90%',
+    //   height: '70%',
+    //   display: 'flex',
+    //   flexDirection: 'row',
+    //   alignItems: 'center',
+    //   justifyContent: 'space-between'
+    // },
+    // selectedDiv: {
+    //   height: '100%',
+    //   width: '50%',
+    //   backgroundColor: '#4ED2B6',
+    //   alignItems: 'center',
+    //   justifyContent: 'center'
+    // },
+    // selectedText: {
+    //   color: 'white',
+    // },
+    // unusedDiv: {
+    //   height: '100%',
+    //   width: '50%',
+    //   alignItems: 'center',
+    //   justifyContent: 'center'
+    // },
+    // unusedText: {
+    //   color: '#4ED2B6',
+    // },
+    // eachBet: {
+    //     alignSelf: 'stretch',
+    //     padding: 10,
+    //     margin: 5,
+    //     borderRadius: 5,
+    //     backgroundColor: 'white',
+    //     border: '0.5px solid'
+    // },
+    // allText: {
+    //     fontFamily: 'Avenir'
+    // }
   });
