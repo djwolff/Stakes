@@ -39,15 +39,8 @@ class CreateBetScreen extends React.Component {
 
   static navigationOptions = {
       header: null,
+      title: 'Create a bet!'
   };
-<<<<<<< HEAD
-  state = {
-    user: '599513d6964b1a00118bd777',
-    betee: '59951445964b1a00118bd778',
-    content: "can't run around naked in front of Horizons",
-    wager: "3 bottles of soylent"
-=======
-
   componentDidMount() {
     this.props.navigation.setParams({
       handleOpenControlPanel: this.openControlPanel.bind(this)
