@@ -57,10 +57,10 @@ class PendingBetScreen extends React.Component {
             console.log('userdata', userData);
             console.log('id', JSON.parse(userData).id);
             filteredSent = respJson.filter((item) => {
-                return item.bettor === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
+                return item.bettor === JSON.parse(userData).id;
             });
             filteredReceived = respJson.filter((item) => {
-                return item.bettee === JSON.parse(userData).id; // STILL HARD CODED!!!!!!!!
+                return item.bettee === JSON.parse(userData).id;
             });
             this.setState({
                 dataSource: ds.cloneWithRows(filteredSent)
