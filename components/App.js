@@ -109,9 +109,6 @@ class App extends React.Component {
                             backgroundColor: 'red',
                             height: '100%',
                             color: '#FFFFFF'
-                        },
-                        main: {
-                            padding: 3
                         }}}
                 tweenHandler={(ratio) => {
                     return {
