@@ -44,19 +44,19 @@ class App extends React.Component {
     }
 
     fetch('https://stakes.herokuapp.com/feed', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-      })
-      .then((resp) => resp.json())
-      .then((respJson) => {
-          console.log(respJson);
-          this.setState({
-              dataSource: ds.cloneWithRows(respJson)
-          })
-      })
-      .catch(console.log)
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+    })
+    .then((resp) => resp.json())
+    .then((respJson) => {
+        console.log(respJson);
+        this.setState({
+            dataSource: ds.cloneWithRows(respJson)
+        })
+    })
+    .catch(console.log)
   }
 
   static navigationOptions = {
@@ -109,9 +109,6 @@ class App extends React.Component {
                             backgroundColor: '#365899',
                             height: '100%',
                             color: '#FFFFFF'
-                        },
-                        main: {
-                            padding: 3
                         }}}
                 tweenHandler={(ratio) => {
                     return {
