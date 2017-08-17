@@ -238,7 +238,7 @@ export default StackNavigator({
   SingleBet: {
     navigationOptions:{
       header: null
-    }
+    },
     screen: SingleBetScreen,
   }
 }, {initialRouteName: 'App'}
